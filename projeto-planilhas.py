@@ -192,7 +192,7 @@ except FileNotFoundError:
   print(f"Arquivo MODELO GRAFITE não encontrado. Verifique o nome e tente novamente.")
   sys.exit()
 pagina_grafite = arquivo_grafite.active
-img_grafite = Image("logos/grafite.png")
+img_grafite = Image("logos/grafite.jpeg")
 img_grafite.width = 578
 img_grafite.height = 51
 pagina_grafite.add_image(img_grafite,"A1")
