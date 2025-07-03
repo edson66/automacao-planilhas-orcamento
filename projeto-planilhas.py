@@ -168,9 +168,9 @@ pagina_nce = arquivo_nce["Matriz"]
 img_nce1 = Image("logos/nce1.png")
 img_nce2 = Image("logos/nce2.jpeg")
 img_nce1.height = 56
-img_nc1.width = 352
+img_nce1.width = 352
 img_nce2.height = 51
-img_nc2.width = 96
+img_nce2.width = 96
 pagina_nce.add_image(img_nce1,"D1")
 pagina_nce.add_image(img_nce2,"B2")
 
