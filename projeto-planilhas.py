@@ -33,7 +33,7 @@ def opcoes():
     dia_consolidacao = int(input("Digite a data da consolidação (dia): "))
     mes_consolidacao = int(input("Digite a data da consolidação (mês): "))
     ano_consolidacao = str(input("Digite a data da consolidação (ano): "))
-  else:
+  elif opcao_consolidacao != "n":
     print("Opção inválida,configurando como NÃO")
     opcao_consolidacao = "n"
 
@@ -49,7 +49,7 @@ def opcoes():
       dia_emitida = int(input("Digite a data da emissão (dia): "))
       mes_emitida = int(input("Digite a data da emissão (mês): "))
       ano_emitida = int(input("Digite a data da emissão (ano): "))
-  else:
+  elif opcao_recibo != "n":
     print("Opção inválida,configurando como NÃO")
     opcao_recibo = "n"
   return opcao_consolidacao,dia_consolidacao,mes_consolidacao,ano_consolidacao,opcao_recibo,dia_recibo,mes_recibo,ano_recibo,dia_emitida,mes_emitida,ano_emitida,meio_pagamento
