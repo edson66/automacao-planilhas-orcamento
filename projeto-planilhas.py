@@ -171,7 +171,7 @@ img_nce1.height = 56
 img_nce1.width = 320
 img_nce2.height = 51
 img_nce2.width = 96
-pagina_nce.add_image(img_nce1,"D1")
+pagina_nce.add_image(img_nce1,"C1")
 pagina_nce.add_image(img_nce2,"B2")
 
 
@@ -309,9 +309,9 @@ if opcao_recibo.lower() == "s":
 
 print("\nProcesso finalizado!")
 
-arquivo_nce.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-{mes}-{dia} NCE.xlsx")
-arquivo_paper.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-{mes}-{dia} PAPER&CO.xlsx")
-arquivo_grafite.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-{mes}-{dia} GRAFITE.xlsx")
+arquivo_nce.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-0{mes}-{dia} NCE.xlsx")
+arquivo_paper.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-0{mes}-{dia} PAPER&CO.xlsx")
+arquivo_grafite.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-0{mes}-{dia} GRAFITE.xlsx")
 arquivo_controle.save(f"arquivos/MODELO DOC NF{NF}.xlsx")
 if opcao_consolidacao.lower() == "s":
   arquivo_consolidacao.save(f"arquivos/ORÇAMENTO NF{NF} {ano_consolidacao}-{mes_consolidacao}-{dia_consolidacao} CONSOLIDAÇÃO DE PESQ DE PREÇO")
