@@ -259,7 +259,7 @@ while pagina_doador.cell(row=linha_doadora,column=2).value is not None:
   else:
    unit_paper = round(unit_nce * (1+ random.uniform(0.15,0.25))*20)/20
    unit_grafite = round(unit_nce * (1+ random.uniform(0.15,0.25))*20)/20
-   while abs(unit_paper - unit_grafite)< 0.05:
+   while abs(unit_paper - unit_grafite)< 0.04:
      unit_grafite = unit_nce * (1+ random.uniform(0.15,0.25))
    precos_randomizados_por_valor[unit_nce] = unit_paper,unit_grafite
 
@@ -307,7 +307,7 @@ if opcao_recibo.lower() == "s":
 
 
 
-print("Processo finalizado!")
+print("\nProcesso finalizado!")
 
 arquivo_nce.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-{mes}-{dia} NCE.xlsx")
 arquivo_paper.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-{mes}-{dia} PAPER&CO.xlsx")
