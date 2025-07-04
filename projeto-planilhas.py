@@ -248,7 +248,7 @@ total_paper = 0
 total_grafite = 0
 item_numero = 1
 while pagina_doador.cell(row=linha_doadora,column=2).value is not None:
-  print(f"Processando produto {item_numero} . . .",end = "\r",flush=True)
+  print(f"Processando produto {item_numero} . . .\n")
   produto = pagina_doador.cell(row=linha_doadora,column=2).value
   un = pagina_doador.cell(row=linha_doadora,column=6).value
   qt = int(pagina_doador.cell(row=linha_doadora,column=7).value)
