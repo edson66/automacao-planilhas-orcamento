@@ -168,7 +168,7 @@ pagina_nce = arquivo_nce["Matriz"]
 img_nce1 = Image("logos/nce1.png")
 img_nce2 = Image("logos/nce2.jpeg")
 img_nce1.height = 56
-img_nce1.width = 352
+img_nce1.width = 320
 img_nce2.height = 51
 img_nce2.width = 96
 pagina_nce.add_image(img_nce1,"D1")
@@ -193,8 +193,8 @@ except FileNotFoundError:
   sys.exit()
 pagina_grafite = arquivo_grafite.active
 img_grafite = Image("logos/grafite.jpeg")
-img_grafite.width = 578
-img_grafite.height = 51
+img_grafite.width = 608
+img_grafite.height = 48
 pagina_grafite.add_image(img_grafite,"A1")
 try:
   arquivo_consolidacao = Document("MODELO CONSOLIDACAO.docx")
