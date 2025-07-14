@@ -104,16 +104,16 @@ def fazer_recibo(arquivo_recibo,total_nce,nome_escola,NF,dia_emitida,mes_emitida
     if "<VALOR>" in paragrafo.text:
       paragrafo.text = paragrafo.text.replace("<VALOR>",str(formatar_reais(total_nce)))
     if "<EXTENSO>" in paragrafo.text:
-      paragrafo.text = paragrafo.text.replace("<EXTENSO>",numero_por_extenso(float(total_nce)))
+      paragrafo.text = paragrafo.text.replace("<EXTENSO>",numero_por_extenso(float(total_nce)).upper())
     if "<NOME>" in paragrafo.text:
       paragrafo.text = paragrafo.text.replace("<NOME>",nome_escola)
     if "<NF>" in paragrafo.text:
       paragrafo.text = paragrafo.text.replace("<NF>",str(NF))
     if "<DATA_EMISSÃO>" in paragrafo.text:
       if dia_emitida and mes_emitida and ano_emitida:
-        paragrafo.text = paragrafo.text.replace("<DATA_EMISSÃO>",f"{dia_emitida}/{mes_emitida}/{ano_emitida}")
+        paragrafo.text = paragrafo.text.replace("<DATA_EMISSÃO>",f"0{dia_emitida}/0{mes_emitida}/0{ano_emitida}")
       else:
-        paragrafo.text = paragrafo.text.replace("<DATA_EMISSÃO>",f"{dia_recibo}/{mes_recibo}/{ano_recibo}")
+        paragrafo.text = paragrafo.text.replace("<DATA_EMISSÃO>",f"0{dia_recibo}/0{mes_recibo}/0{ano_recibo}")
     if "<MEIO>" in paragrafo.text:
       paragrafo.text = paragrafo.text.replace("<MEIO>",meio_pagamento)
     if "<DATA>" in paragrafo.text:
