@@ -314,6 +314,6 @@ arquivo_paper.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-0{mes}-{dia} PAPER&CO.xlsx
 arquivo_grafite.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-0{mes}-{dia} GRAFITE.xlsx")
 arquivo_controle.save(f"arquivos/MODELO DOC NF{NF}.xlsx")
 if opcao_consolidacao.lower() == "s":
-  arquivo_consolidacao.save(f"arquivos/ORÇAMENTO NF{NF} {ano_consolidacao}-{mes_consolidacao}-{dia_consolidacao} CONSOLIDAÇÃO DE PESQ DE PREÇO")
+  arquivo_consolidacao.save(f"arquivos/ORÇAMENTO NF{NF} {ano_consolidacao}-{mes_consolidacao}-{dia_consolidacao} CONSOLIDAÇÃO DE PESQ DE PREÇO.docx")
 if opcao_recibo.lower() == "s":
-  arquivo_recibo.save(f"arquivos/ORÇAMENTO NF{NF} {ano_recibo}-{mes_recibo}-{dia_recibo} RECIBO {round(total_nce,2)} NCE")
+  arquivo_recibo.save(f"arquivos/ORÇAMENTO NF{NF} {ano_recibo}-{mes_recibo}-{dia_recibo} RECIBO {round(total_nce,2)} NCE.docx")
