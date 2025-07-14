@@ -117,11 +117,11 @@ def fazer_recibo(arquivo_recibo,total_nce,nome_escola,NF,dia_emitida,mes_emitida
     if "<MEIO>" in paragrafo.text:
       paragrafo.text = paragrafo.text.replace("<MEIO>",meio_pagamento)
     if "<DATA>" in paragrafo.text:
-      paragrafo.text = paragrafo.text.replace("<DATA>",f"{dia_recibo}/{mes_recibo}/{ano_recibo}")
+      paragrafo.text = paragrafo.text.replace("<DATA>",f"0{dia_recibo}/0{mes_recibo}/{ano_recibo}")
     if "<DIA>" in paragrafo.text:
       paragrafo.text = paragrafo.text.replace("<DIA>",str(dia_recibo))
     if "<MÊS>" in paragrafo.text:
-      paragrafo.text = paragrafo.text.replace("<MÊS>",str(meses[mes_recibo]))
+      paragrafo.text = paragrafo.text.replace("<MÊS>",str(meses[mes_recibo].upper())
     if "<ANO>" in paragrafo.text:
       paragrafo.text = paragrafo.text.replace("<ANO>",str(ano_recibo))
 
