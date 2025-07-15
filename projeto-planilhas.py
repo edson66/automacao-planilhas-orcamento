@@ -140,7 +140,7 @@ def fazer_consolidacao(arquivo_consolidacao,item_numero,produto,un,qt,unit_nce,u
             texto_novo = texto_novo.replace(f"<VALOR_A{item_numero}>", str(unit_nce))
             texto_novo = texto_novo.replace(f"<VALOR_B{item_numero}>", str(unit_paper))
             texto_novo = texto_novo.replace(f"<VALOR_C{item_numero}>", str(unit_grafite))
-
+            
             # Substituições gerais
             texto_novo = texto_novo.replace("<DIRETOR>", diretor_escola)
             texto_novo = texto_novo.replace("<CIDADE>", cidade_escola)
@@ -150,7 +150,7 @@ def fazer_consolidacao(arquivo_consolidacao,item_numero,produto,un,qt,unit_nce,u
             texto_novo = texto_novo.replace("<TOTAL_C>", str(formatar_reais(total_grafite)))
             texto_novo = texto_novo.replace("<NOME>", nome_escola)
             texto_novo = texto_novo.replace("<CNPJ>", cnpj_escola)
-
+            
             if texto_novo != texto_original:
               for run in paragrafo.runs:
                 run.text = ""  # Limpa os runs atuais
