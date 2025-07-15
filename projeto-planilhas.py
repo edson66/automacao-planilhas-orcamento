@@ -132,28 +132,27 @@ def fazer_consolidacao(arquivo_consolidacao,item_numero,produto,un,qt,unit_nce,u
       for row in table.rows:
         for cell in row.cells:
           for paragrafo in cell.paragraphs:
-            texto_original = paragrafo.text
-            # Substituições por item
-            texto_novo = texto_original.replace(f"<VALOR{item_numero}>", str(produto))
-            texto_novo = texto_novo.replace(f"<UNI{item_numero}>", str(un))
-            texto_novo = texto_novo.replace(f"<Q{item_numero}>", str(qt))
-            texto_novo = texto_novo.replace(f"<VALOR_A{item_numero}>", str(unit_nce))
-            texto_novo = texto_novo.replace(f"<VALOR_B{item_numero}>", str(unit_paper))
-            texto_novo = texto_novo.replace(f"<VALOR_C{item_numero}>", str(unit_grafite))
-            
-            # Substituições gerais
-            texto_novo = texto_novo.replace("<DIRETOR>", diretor_escola)
-            texto_novo = texto_novo.replace("<CIDADE>", cidade_escola)
-            texto_novo = texto_novo.replace("<DATA>", f"{dia_consolidacao} de {meses[mes_consolidacao]} de {ano_consolidacao}")
-            texto_novo = texto_novo.replace("<TOTAL_A>", str(formatar_reais(total_nce)))
-            texto_novo = texto_novo.replace("<TOTAL_B>", str(formatar_reais(total_paper)))
-            texto_novo = texto_novo.replace("<TOTAL_C>", str(formatar_reais(total_grafite)))
-            texto_novo = texto_novo.replace("<NOME>", nome_escola)
-            texto_novo = texto_novo.replace("<CNPJ>", cnpj_escola)
-            
-            if texto_novo != texto_original:
-              paragrafo.clear()
-              paragrafo.add_run(texto_novo)
+            for run in paragraph.runs:
+              texto_original = run.text
+              # Substituições por item
+              texto_novo = texto_original.replace(f"<VALOR{item_numero}>", str(produto))
+              texto_novo = texto_novo.replace(f"<UNI{item_numero}>", str(un))
+              texto_novo = texto_novo.replace(f"<Q{item_numero}>", str(qt))
+              texto_novo = texto_novo.replace(f"<VALOR_A{item_numero}>", str(unit_nce))
+              texto_novo = texto_novo.replace(f"<VALOR_B{item_numero}>", str(unit_paper))
+              texto_novo = texto_novo.replace(f"<VALOR_C{item_numero}>", str(unit_grafite))
+              
+              # Substituições gerais
+              texto_novo = texto_novo.replace("<DIRETOR>", diretor_escola)
+              texto_novo = texto_novo.replace("<CIDADE>", cidade_escola)
+              texto_novo = texto_novo.replace("<DATA>", f"{dia_consolidacao} de {meses[mes_consolidacao]} de {ano_consolidacao}")
+              texto_novo = texto_novo.replace("<TOTAL_A>", str(formatar_reais(total_nce)))
+              texto_novo = texto_novo.replace("<TOTAL_B>", str(formatar_reais(total_paper)))
+              texto_novo = texto_novo.replace("<TOTAL_C>", str(formatar_reais(total_grafite)))
+              texto_novo = texto_novo.replace("<NOME>", nome_escola)
+              texto_novo = texto_novo.replace("<CNPJ>", cnpj_escola)
+              run.text = texto_novo
+
               
 #abertura de arquivos
 try:
