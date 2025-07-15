@@ -152,9 +152,8 @@ def fazer_consolidacao(arquivo_consolidacao,item_numero,produto,un,qt,unit_nce,u
             texto_novo = texto_novo.replace("<CNPJ>", cnpj_escola)
             
             if texto_novo != texto_original:
-              for run in paragrafo.runs:
-                paragrafo.clear()
-                paragrafo.add_run(texto_novo)
+              paragrafo.clear()
+              paragrafo.add_run(texto_novo)
               
 #abertura de arquivos
 try:
