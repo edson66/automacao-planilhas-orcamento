@@ -101,61 +101,66 @@ def numero_por_extenso(num):
 
 def fazer_recibo(arquivo_recibo,total_nce,nome_escola,NF,dia_emitida,mes_emitida,ano_emitida,dia_recibo,mes_recibo,ano_recibo,meio_pagamento,meses):
   for paragrafo in arquivo_recibo.paragraphs:
-    if "<VALOR>" in paragrafo.text:
-      paragrafo.text = paragrafo.text.replace("<VALOR>",str(formatar_reais(total_nce)))
-    if "<EXTENSO>" in paragrafo.text:
-      paragrafo.text = paragrafo.text.replace("<EXTENSO>",numero_por_extenso(float(total_nce)).upper())
-    if "<NOME>" in paragrafo.text:
-      paragrafo.text = paragrafo.text.replace("<NOME>",nome_escola)
-    if "<NF>" in paragrafo.text:
-      paragrafo.text = paragrafo.text.replace("<NF>",str(NF))
-    if "<DATA_EMISSÃO>" in paragrafo.text:
-      if dia_emitida and mes_emitida and ano_emitida:
-        paragrafo.text = paragrafo.text.replace("<DATA_EMISSÃO>",f"0{dia_emitida}/0{mes_emitida}/0{ano_emitida}")
-      else:
-        paragrafo.text = paragrafo.text.replace("<DATA_EMISSÃO>",f"0{dia_recibo}/0{mes_recibo}/0{ano_recibo}")
-    if "<MEIO>" in paragrafo.text:
-      paragrafo.text = paragrafo.text.replace("<MEIO>",meio_pagamento)
-    if "<DATA>" in paragrafo.text:
-      paragrafo.text = paragrafo.text.replace("<DATA>",f"0{dia_recibo}/0{mes_recibo}/{ano_recibo}")
-    if "<DIA>" in paragrafo.text:
-      paragrafo.text = paragrafo.text.replace("<DIA>",str(dia_recibo))
-    if "<MÊS>" in paragrafo.text:
-      paragrafo.text = paragrafo.text.replace("<MÊS>",str(meses[mes_recibo].upper()))
-    if "<ANO>" in paragrafo.text:
-      paragrafo.text = paragrafo.text.replace("<ANO>",str(ano_recibo))
+    for run in paragrafo.runs:
+      if "<VALOR>" in run.text:
+        run.text = run.text.replace("<VALOR>",str(formatar_reais(total_nce)))
+      if "<EXTENSO>" in run.text:
+        run.text = run.text.replace("<EXTENSO>",numero_por_extenso(float(total_nce)).upper())
+      if "<NOME>" in run.text:
+        run.text = run.text.replace("<NOME>",nome_escola)
+      if "<NF>" in run.text:
+        run.text = run.text.replace("<NF>",str(NF))
+      if "<DATA_EMISSÃO>" in run.text:
+        if dia_emitida and mes_emitida and ano_emitida:
+          run.text = run.text.replace("<DATA_EMISSÃO>",f"0{dia_emitida}/0{mes_emitida}/0{ano_emitida}")
+        else:
+          run.text = run.text.replace("<DATA_EMISSÃO>",f"0{dia_recibo}/0{mes_recibo}/0{ano_recibo}")
+      if "<MEIO>" in run.text:
+        run.text = run.text.replace("<MEIO>",meio_pagamento)
+      if "<DATA>" in run.text:
+        run.text = run.text.replace("<DATA>",f"0{dia_recibo}/0{mes_recibo}/{ano_recibo}")
+      if "<DIA>" in run.text:
+        run.text = run.text.replace("<DIA>",str(dia_recibo))
+      if "<MÊS>" in run.text:
+        run.text = run.text.replace("<MÊS>",str(meses[mes_recibo].upper()))
+      if "<ANO>" in run.text:
+        run.text = run.text.replace("<ANO>",str(ano_recibo))
 
 def fazer_consolidacao(arquivo_consolidacao,item_numero,produto,un,qt,unit_nce,unit_paper,unit_grafite,diretor_escola,
                        nome_escola,dia_consolidacao,mes_consolidacao,ano_consolidacao,cidade_escola,cnpj_escola,total_nce,total_paper,total_grafite,meses):
-    for paragrafo in arquivo_consolidacao.paragraphs:
-      if f"<VALOR{item_numero}>" in paragrafo.text:
-        paragrafo.text = paragrafo.text.replace(f"<VALOR{item_numero}>",str(produto))
-      if f"<UNI{item_numero}>" in paragrafo.text:
-        paragrafo.text = paragrafo.text.replace(f"<UNI{item_numero}>",str(un))
-      if f"<Q{item_numero}>" in paragrafo.text:
-        paragrafo.text = paragrafo.text.replace(f"<Q{item_numero}>",str(qt))
-      if f"<VALOR_A{item_numero}>" in paragrafo.text:
-        paragrafo.text = paragrafo.text.replace(f"<VALOR_A{item_numero}>",str(unit_nce))
-      if f"<VALOR_B{item_numero}>" in paragrafo.text:
-        paragrafo.text = paragrafo.text.replace(f"<VALOR_B{item_numero}>",str(unit_paper))
-      if f"<VALOR_C{item_numero}>" in paragrafo.text:
-        paragrafo.text = paragrafo.text.replace(f"<VALOR_C{item_numero}>",str(unit_grafite))
-      if "<DIRETOR>" in paragrafo.text:
-        paragrafo.text = paragrafo.text.replace("<DIRETOR>",diretor_escola)
-      if "<CIDADE>" in paragrafo.text:
-        paragrafo.text = paragrafo.text.replace("<CIDADE>",cidade_escola)
-      if "<DATA>" in paragrafo.text:
-        paragrafo.text = paragrafo.text.replace("<DATA>",f"{dia_consolidacao} de {meses[mes_consolidacao]} de {ano_consolidacao}")
-      if "<TOTAL_A>" in paragrafo.text:
-        paragrafo.text = paragrafo.text.replace("<TOTAL_A>",str(formatar_reais(total_nce)))
-      if "<TOTAL_B>" in paragrafo.text:
-        paragrafo.text = paragrafo.text.replace("<TOTAL_B>",str(formatar_reais(total_paper)))
-      if "<TOTAL_C>" in paragrafo.text:
-        paragrafo.text = paragrafo.text.replace("<TOTAL_C>",str(formatar_reais(total_grafite)))
-      if "<NOME>" in paragrafo.text:
-        paragrafo.text = paragrafo.text.replace("<NOME>",nome_escola)
-      if "<CNPJ>" in paragrafo.text:
-        paragrafo.text = paragrafo.text.replace("<CNPJ>",cnpj_escola)
+    for table in arquivo_consolidacao.tables:
+      for row in table.rows:
+        for cell in row.cells:
+          for paragrafo in cell.paragraphs: 
+            for run in paragrafo.runs:
+              if f"<VALOR{item_numero}>" in run.text:
+                run.text = run.text.replace(f"<VALOR{item_numero}>",str(produto))
+              if f"<UNI{item_numero}>" in run.text:
+                run.text = run.text.replace(f"<UNI{item_numero}>",str(un))
+              if f"<Q{item_numero}>" in run.text:
+                run.text = run.text.replace(f"<Q{item_numero}>",str(qt))
+              if f"<VALOR_A{item_numero}>" in run.text:
+                run.text = run.text.replace(f"<VALOR_A{item_numero}>",str(unit_nce))
+              if f"<VALOR_B{item_numero}>" in run.text:
+                run.text = run.text.replace(f"<VALOR_B{item_numero}>",str(unit_paper))
+              if f"<VALOR_C{item_numero}>" in run.text:
+                run.text = run.text.replace(f"<VALOR_C{item_numero}>",str(unit_grafite))
+              if "<DIRETOR>" in run.text:
+                run.text = run.text.replace("<DIRETOR>",diretor_escola)
+              if "<CIDADE>" in run.text:
+                run.text = run.text.replace("<CIDADE>",cidade_escola)
+              if "<DATA>" in run.text:
+                run.text = run.text.replace("<DATA>",f"{dia_consolidacao} de {meses[mes_consolidacao]} de {ano_consolidacao}")
+              if "<TOTAL_A>" in run.text:
+                run.text = run.text.replace("<TOTAL_A>",str(formatar_reais(total_nce)))
+              if "<TOTAL_B>" in run.text:
+                run.text = run.text.replace("<TOTAL_B>",str(formatar_reais(total_paper)))
+              if "<TOTAL_C>" in run.text:
+                run.text = run.text.replace("<TOTAL_C>",str(formatar_reais(total_grafite)))
+              if "<NOME>" in run.text:
+                run.text = run.text.replace("<NOME>",nome_escola)
+              if "<CNPJ>" in run.text:
+                run.text = run.text.replace("<CNPJ>",cnpj_escola)
 
 
 #abertura de arquivos
