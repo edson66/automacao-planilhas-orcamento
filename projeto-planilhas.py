@@ -112,13 +112,13 @@ def fazer_recibo(arquivo_recibo,total_nce,nome_escola,NF,dia_emitida,mes_emitida
         run.text = run.text.replace("<NF>",str(NF))
       if "<DATA_EMISSÃO>" in run.text:
         if dia_emitida and mes_emitida and ano_emitida:
-          run.text = run.text.replace("<DATA_EMISSÃO>",f"0{dia_emitida}/0{mes_emitida}/0{ano_emitida}")
+          run.text = run.text.replace("<DATA_EMISSÃO>",f"{dia_emitida}/{mes_emitida}/{ano_emitida}")
         else:
-          run.text = run.text.replace("<DATA_EMISSÃO>",f"0{dia_recibo}/0{mes_recibo}/0{ano_recibo}")
+          run.text = run.text.replace("<DATA_EMISSÃO>",f"{dia_recibo}/{mes_recibo}/{ano_recibo}")
       if "<MEIO>" in run.text:
         run.text = run.text.replace("<MEIO>",meio_pagamento)
       if "<DATA>" in run.text:
-        run.text = run.text.replace("<DATA>",f"0{dia_recibo}/0{mes_recibo}/{ano_recibo}")
+        run.text = run.text.replace("<DATA>",f"{dia_recibo}/{mes_recibo}/{ano_recibo}")
       if "<DIA>" in run.text:
         run.text = run.text.replace("<DIA>",str(dia_recibo))
       if "<MÊS>" in run.text:
@@ -131,36 +131,30 @@ def fazer_consolidacao(arquivo_consolidacao,item_numero,produto,un,qt,unit_nce,u
     for table in arquivo_consolidacao.tables:
       for row in table.rows:
         for cell in row.cells:
-          for paragrafo in cell.paragraphs: 
-            for run in paragrafo.runs:
-              if f"<VALOR{item_numero}>" in run.text:
-                run.text = run.text.replace(f"<VALOR{item_numero}>",str(produto))
-              if f"<UNI{item_numero}>" in run.text:
-                run.text = run.text.replace(f"<UNI{item_numero}>",str(un))
-              if f"<Q{item_numero}>" in run.text:
-                run.text = run.text.replace(f"<Q{item_numero}>",str(qt))
-              if f"<VALOR_A{item_numero}>" in run.text:
-                run.text = run.text.replace(f"<VALOR_A{item_numero}>",str(unit_nce))
-              if f"<VALOR_B{item_numero}>" in run.text:
-                run.text = run.text.replace(f"<VALOR_B{item_numero}>",str(unit_paper))
-              if f"<VALOR_C{item_numero}>" in run.text:
-                run.text = run.text.replace(f"<VALOR_C{item_numero}>",str(unit_grafite))
-              if "<DIRETOR>" in run.text:
-                run.text = run.text.replace("<DIRETOR>",diretor_escola)
-              if "<CIDADE>" in run.text:
-                run.text = run.text.replace("<CIDADE>",cidade_escola)
-              if "<DATA>" in run.text:
-                run.text = run.text.replace("<DATA>",f"{dia_consolidacao} de {meses[mes_consolidacao]} de {ano_consolidacao}")
-              if "<TOTAL_A>" in run.text:
-                run.text = run.text.replace("<TOTAL_A>",str(formatar_reais(total_nce)))
-              if "<TOTAL_B>" in run.text:
-                run.text = run.text.replace("<TOTAL_B>",str(formatar_reais(total_paper)))
-              if "<TOTAL_C>" in run.text:
-                run.text = run.text.replace("<TOTAL_C>",str(formatar_reais(total_grafite)))
-              if "<NOME>" in run.text:
-                run.text = run.text.replace("<NOME>",nome_escola)
-              if "<CNPJ>" in run.text:
-                run.text = run.text.replace("<CNPJ>",cnpj_escola)
+          for paragrafo in cell.paragraphs:                     
+            texto_original = paragrafo.text
+                  # Substituições por item
+                   texto_novo = texto_original.replace(f"<VALOR{item_numero}>", str(produto))
+                   texto_novo = texto_novo.replace(f"<UNI{item_numero}>", str(un))
+                   texto_novo = texto_novo.replace(f"<Q{item_numero}>", str(qt))
+                   texto_novo = texto_novo.replace(f"<VALOR_A{item_numero}>", str(unit_nce))
+                   texto_novo = texto_novo.replace(f"<VALOR_B{item_numero}>", str(unit_paper))
+                   texto_novo = texto_novo.replace(f"<VALOR_C{item_numero}>", str(unit_grafite))
+
+                  # Substituições gerais
+                   texto_novo = texto_novo.replace("<DIRETOR>", diretor_escola)
+                   texto_novo = texto_novo.replace("<CIDADE>", cidade_escola)
+                   texto_novo = texto_novo.replace("<DATA>", f"{dia_consolidacao} de {meses[mes_consolidacao]} de {ano_consolidacao}")
+                   texto_novo = texto_novo.replace("<TOTAL_A>", str(formatar_reais(total_nce)))
+                   texto_novo = texto_novo.replace("<TOTAL_B>", str(formatar_reais(total_paper)))
+                   texto_novo = texto_novo.replace("<TOTAL_C>", str(formatar_reais(total_grafite)))
+                   texto_novo = texto_novo.replace("<NOME>", nome_escola)
+                   texto_novo = texto_novo.replace("<CNPJ>", cnpj_escola)
+
+                  if texto_novo != texto_original:
+                      for run in paragrafo.runs:
+                          run.text = ""  # Limpa os runs atuais
+                      paragrafo.runs[0].text = texto_novo 
 
 
 #abertura de arquivos
@@ -314,9 +308,9 @@ if opcao_recibo.lower() == "s":
 
 print("\nProcesso finalizado!")
 
-arquivo_nce.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-0{mes}-{dia} NCE.xlsx")
-arquivo_paper.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-0{mes}-{dia} PAPER&CO.xlsx")
-arquivo_grafite.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-0{mes}-{dia} GRAFITE.xlsx")
+arquivo_nce.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-{mes}-{dia} NCE.xlsx")
+arquivo_paper.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-{mes}-{dia} PAPER&CO.xlsx")
+arquivo_grafite.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-{mes}-{dia} GRAFITE.xlsx")
 arquivo_controle.save(f"arquivos/MODELO DOC NF{NF}.xlsx")
 if opcao_consolidacao.lower() == "s":
   arquivo_consolidacao.save(f"arquivos/ORÇAMENTO NF{NF} {ano_consolidacao}-{mes_consolidacao}-{dia_consolidacao} CONSOLIDAÇÃO DE PESQ DE PREÇO.docx")
