@@ -153,8 +153,8 @@ def fazer_consolidacao(arquivo_consolidacao,item_numero,produto,un,qt,unit_nce,u
             
             if texto_novo != texto_original:
               for run in paragrafo.runs:
-                run.text = ""  # Limpa os runs atuais
-              paragrafo.runs[0].text = texto_novo
+                paragrafo.clear()
+                paragrafo.add_run(texto_novo)
               
 #abertura de arquivos
 try:
