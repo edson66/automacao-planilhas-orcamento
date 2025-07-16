@@ -150,23 +150,23 @@ def substituir_placeholders_em_tabela(doc, mapa_substituicoes):
   for table in doc.tables:
     for row in table.rows:
       for cell in row.cells:
-      texto_completo = ""
-      runs = []
-      
-      for paragraph in cell.paragraphs:
-        for run in paragraph.runs:
-          runs.append(run)
-          texto_completo += run.text
-      
-      # Substitui os placeholders no texto completo
-      for chave, valor in mapa_substituicoes.items():
-        texto_completo = texto_completo.replace(chave, valor)
-      
-      # Limpa os runs e distribui o texto modificado
-      if runs:
-        runs[0].text = texto_completo
-        for run in runs[1:]:
-          run.text = ""
+        texto_completo = ""
+        runs = []
+        
+        for paragraph in cell.paragraphs:
+          for run in paragraph.runs:
+            runs.append(run)
+            texto_completo += run.text
+        
+        # Substitui os placeholders no texto completo
+        for chave, valor in mapa_substituicoes.items():
+          texto_completo = texto_completo.replace(chave, valor)
+        
+        # Limpa os runs e distribui o texto modificado
+        if runs:
+          runs[0].text = texto_completo
+          for run in runs[1:]:
+            run.text = ""
 
 #abertura de arquivos
 try:
