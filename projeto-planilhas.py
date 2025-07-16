@@ -166,7 +166,7 @@ def substituir_placeholders_em_tabela(doc, mapa_substituicoes):
           if runs:
             runs[0].text = texto_completo
             for run in runs[1:]:
-            run.text = ""
+              run.text = ""
               
 #abertura de arquivos
 try:
