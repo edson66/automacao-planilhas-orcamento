@@ -128,31 +128,45 @@ def fazer_recibo(arquivo_recibo,total_nce,nome_escola,NF,dia_emitida,mes_emitida
 
 def fazer_consolidacao(arquivo_consolidacao,item_numero,produto,un,qt,unit_nce,unit_paper,unit_grafite,diretor_escola,
                        nome_escola,dia_consolidacao,mes_consolidacao,ano_consolidacao,cidade_escola,cnpj_escola,total_nce,total_paper,total_grafite,meses):
-    for table in arquivo_consolidacao.tables:
+    mapa = {
+        f"<VALOR{item_numero}>": str(produto),
+        f"<UNI{item_numero}>": str(un),
+        f"<Q{item_numero}>": str(qt),
+        f"<VALOR_A{item_numero}>": str(unit_nce),
+        f"<VALOR_B{item_numero}>": str(unit_paper),
+        f"<VALOR_C{item_numero}>": str(unit_grafite),
+        "<DIRETOR>": diretor_escola,
+        "<CIDADE>": cidade_escola,
+        "<DATA>": f"{dia_consolidacao} de {meses[mes_consolidacao]} de {ano_consolidacao}",
+        "<TOTAL_A>": formatar_reais(total_nce),
+        "<TOTAL_B>": formatar_reais(total_paper),
+        "<TOTAL_C>": formatar_reais(total_grafite),
+        "<NOME>": nome_escola,
+        "<CNPJ>": cnpj_escola,
+    }                     
+    substituir_placeholders_em_tabela(arquivo_consolidacao, mapa)
+                         
+def substituir_placeholders_em_tabela(doc, mapa_substituicoes):
+    for table in doc.tables:
       for row in table.rows:
         for cell in row.cells:
-          for paragrafo in cell.paragraphs:
-            for run in paragraph.runs:
-              texto_original = run.text
-              # Substituições por item
-              texto_novo = texto_original.replace(f"<VALOR{item_numero}>", str(produto))
-              texto_novo = texto_novo.replace(f"<UNI{item_numero}>", str(un))
-              texto_novo = texto_novo.replace(f"<Q{item_numero}>", str(qt))
-              texto_novo = texto_novo.replace(f"<VALOR_A{item_numero}>", str(unit_nce))
-              texto_novo = texto_novo.replace(f"<VALOR_B{item_numero}>", str(unit_paper))
-              texto_novo = texto_novo.replace(f"<VALOR_C{item_numero}>", str(unit_grafite))
-              
-              # Substituições gerais
-              texto_novo = texto_novo.replace("<DIRETOR>", diretor_escola)
-              texto_novo = texto_novo.replace("<CIDADE>", cidade_escola)
-              texto_novo = texto_novo.replace("<DATA>", f"{dia_consolidacao} de {meses[mes_consolidacao]} de {ano_consolidacao}")
-              texto_novo = texto_novo.replace("<TOTAL_A>", str(formatar_reais(total_nce)))
-              texto_novo = texto_novo.replace("<TOTAL_B>", str(formatar_reais(total_paper)))
-              texto_novo = texto_novo.replace("<TOTAL_C>", str(formatar_reais(total_grafite)))
-              texto_novo = texto_novo.replace("<NOME>", nome_escola)
-              texto_novo = texto_novo.replace("<CNPJ>", cnpj_escola)
-              run.text = texto_novo
+          texto_completo = ""
+          runs = []
 
+          for paragraph in cell.paragraphs:
+            for run in paragraph.runs:
+              runs.append(run)
+              texto_completo += run.text
+
+                # Substitui os placeholders no texto completo
+          for chave, valor in mapa_substituicoes.items():
+            texto_completo = texto_completo.replace(chave, valor)
+
+                # Limpa os runs e distribui o texto modificado
+          if runs:
+            runs[0].text = texto_completo
+            for run in runs[1:]:
+            run.text = ""
               
 #abertura de arquivos
 try:
