@@ -294,15 +294,36 @@ if opcao_recibo.lower() == "s":
 print("\nProcesso finalizado!Gerando documentos Word...")
 if opcao_consolidacao.lower() == "s":
   print("Gerando consolidação...")
-  contexto_consolidacao['DIRETOR'] = diretor_escola
-  contexto_consolidacao['CIDADE'] = cidade_escola
-  contexto_consolidacao['DATA'] = f"{dia_consolidacao} de {meses[mes_consolidacao]} de {ano_consolidacao}"
-  contexto_consolidacao['TOTAL_A'] = formatar_reais(total_nce)
-  contexto_consolidacao['TOTAL_B'] = formatar_reais(total_paper)
-  contexto_consolidacao['TOTAL_C'] = formatar_reais(total_grafite)
-  contexto_consolidacao['NOME'] = nome_escola
-  contexto_consolidacao['CNPJ'] = cnpj_escola
-  arquivo_consolidacao.render(contexto_consolidacao)
+  contexto_simples = {
+        'DIRETOR': diretor_escola,
+        'CIDADE': cidade_escola,
+        'DATA': f"{dia_consolidacao} de {meses[mes_consolidacao]} de {ano_consolidacao}",
+        'TOTAL_A': formatar_reais(total_nce),
+        'TOTAL_B': formatar_reais(total_paper),
+        'TOTAL_C': formatar_reais(total_grafite),
+        'NOME': nome_escola,
+        'CNPJ': cnpj_escola,
+  }
+
+  arquivo_consolidacao.render(contexto_simples)
+  try:
+      tabela_propostas = arquivo_consolidacao.tables[2]
+      print("Tabela de propostas encontrada. Adicionando linhas...
+      for item in contexto_consolidacao['itens_tabela']:
+        celulas_da_nova_linha = tabela_propostas.add_row().cells
+            
+            # Preenche cada célula da nova linha
+        celulas_da_nova_linha[0].text = str(item['numero'])
+        celulas_da_nova_linha[1].text = item['produto']
+        celulas_da_nova_linha[2].text = item['unidade']
+        celulas_da_nova_linha[3].text = str(item['q'])
+        celulas_da_nova_linha[4].text = item['valor_a']
+        celulas_da_nova_linha[5].text = item['valor_b']
+        celulas_da_nova_linha[6].text = item['valor_c']
+        
+        print("Linhas da tabela adicionadas com sucesso.")
+  except IndexError:
+        print("ERRO: Não foi possível encontrar a tabela de propostas. Verifique se ela é a terceira tabela no documento.")
 
 arquivo_nce.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-{mes}-{dia} NCE.xlsx")
 arquivo_paper.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-{mes}-{dia} PAPER&CO.xlsx")
