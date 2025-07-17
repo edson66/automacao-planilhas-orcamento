@@ -269,7 +269,7 @@ while pagina_doador.cell(row=linha_doadora,column=2).value is not None:
   #CONSOLIDAÇÃO
   if opcao_consolidacao.lower() == "s":
     item_para_tabela = {
-        'valor':produto,
+        'numero':item_numero,
         'unidade': un,
         'q': qt,
         'produto': produto,
