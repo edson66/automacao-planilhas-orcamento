@@ -308,7 +308,7 @@ if opcao_consolidacao.lower() == "s":
   arquivo_consolidacao.render(contexto_simples)
   try:
       tabela_propostas = arquivo_consolidacao.tables[2]
-      print("Tabela de propostas encontrada. Adicionando linhas...
+      print("Tabela de propostas encontrada. Adicionando linhas...")
       for item in contexto_consolidacao['itens_tabela']:
         celulas_da_nova_linha = tabela_propostas.add_row().cells
             
@@ -321,7 +321,7 @@ if opcao_consolidacao.lower() == "s":
         celulas_da_nova_linha[5].text = item['valor_b']
         celulas_da_nova_linha[6].text = item['valor_c']
         
-        print("Linhas da tabela adicionadas com sucesso.")
+      print("Linhas da tabela adicionadas com sucesso.")
   except IndexError:
         print("ERRO: Não foi possível encontrar a tabela de propostas. Verifique se ela é a terceira tabela no documento.")
 
