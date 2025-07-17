@@ -2,6 +2,7 @@ from openpyxl import load_workbook
 from openpyxl.drawing.image import Image
 import random
 from docx import Document
+from docxtpl import DocxTemplate
 from num2words import num2words
 import sys
 
@@ -143,29 +144,8 @@ def fazer_consolidacao(arquivo_consolidacao,item_numero,produto,un,qt,unit_nce,u
         "<TOTAL_C>": formatar_reais(total_grafite),
         "<NOME>": nome_escola,
         "<CNPJ>": cnpj_escola,
-    }                     
-    substituir_placeholders_em_tabela(arquivo_consolidacao, mapa)
-                         
-def substituir_placeholders_em_tabela(doc, mapa_substituicoes):
-    for table in doc.tables:
-        for row in table.rows:
-            for cell in row.cells:
-                texto_completo = ""
-                runs = []
-
-                for paragraph in cell.paragraphs:
-                    for run in paragraph.runs:
-                        runs.append(run)
-                        texto_completo += run.text
-
-                for chave, valor in mapa_substituicoes.items():
-                    texto_completo = texto_completo.replace(chave, valor)
-
-                if runs:
-                    runs[0].text = texto_completo
-                    for run in runs[1:]:
-                        run.text = ""
-
+    }
+    arquivo_consolidacao.render(mapa)
 
 #abertura de arquivos
 try:
@@ -206,7 +186,7 @@ img_grafite.width = 608
 img_grafite.height = 48
 pagina_grafite.add_image(img_grafite,"A1")
 try:
-  arquivo_consolidacao = Document("MODELO CONSOLIDACAO.docx")
+  arquivo_consolidacao = DocxTemplate("MODELO CONSOLIDACAO.docx")
 except FileNotFoundError:
   print(f"Arquivo MODELO CONSOLIDACAO não encontrado. Verifique o nome e tente novamente.")
   sys.exit()
