@@ -129,7 +129,7 @@ def fazer_recibo(arquivo_recibo,total_nce,nome_escola,NF,dia_emitida,mes_emitida
 
 
 #def fazer_consolidacao(arquivo_consolidacao,item_numero,produto,un,qt,unit_nce,unit_paper,unit_grafite,diretor_escola,
-                       nome_escola,dia_consolidacao,mes_consolidacao,ano_consolidacao,cidade_escola,cnpj_escola,total_nce,total_paper,total_grafite,meses,contexto_consolidacao):
+#                       nome_escola,dia_consolidacao,mes_consolidacao,ano_consolidacao,cidade_escola,cnpj_escola,total_nce,total_paper,total_grafite,meses,contexto_consolidacao):
 
 
 #abertura de arquivos
