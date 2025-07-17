@@ -127,25 +127,10 @@ def fazer_recibo(arquivo_recibo,total_nce,nome_escola,NF,dia_emitida,mes_emitida
       if "<ANO>" in run.text:
         run.text = run.text.replace("<ANO>",str(ano_recibo))
 
-def fazer_consolidacao(arquivo_consolidacao,item_numero,produto,un,qt,unit_nce,unit_paper,unit_grafite,diretor_escola,
-                       nome_escola,dia_consolidacao,mes_consolidacao,ano_consolidacao,cidade_escola,cnpj_escola,total_nce,total_paper,total_grafite,meses):
-    mapa = {
-        f"VALOR{item_numero}": str(produto),
-        f"UNI{item_numero}": str(un),
-        f"Q{item_numero}": str(qt),
-        f"VALOR_A{item_numero}": str(unit_nce),
-        f"VALOR_B{item_numero}": str(unit_paper),
-        f"VALOR_C{item_numero}": str(unit_grafite),
-        "DIRETOR": diretor_escola,
-        "CIDADE": cidade_escola,
-        "DATA": f"{dia_consolidacao} de {meses[mes_consolidacao]} de {ano_consolidacao}",
-        "TOTAL_A": formatar_reais(total_nce),
-        "TOTAL_B": formatar_reais(total_paper),
-        "TOTAL_C": formatar_reais(total_grafite),
-        "NOME": nome_escola,
-        "CNPJ": cnpj_escola,
-    }
-    arquivo_consolidacao.render(mapa)
+
+#def fazer_consolidacao(arquivo_consolidacao,item_numero,produto,un,qt,unit_nce,unit_paper,unit_grafite,diretor_escola,
+                       nome_escola,dia_consolidacao,mes_consolidacao,ano_consolidacao,cidade_escola,cnpj_escola,total_nce,total_paper,total_grafite,meses,contexto_consolidacao):
+
 
 #abertura de arquivos
 try:
@@ -221,7 +206,9 @@ except FileNotFoundError:
   sys.exit()
 pagina_doador = arquivo_doador["Table 10"]
 
-
+contexto_consolidacao = {
+    "itens_tabela": [], # Uma lista para guardar cada linha de produto
+}
 
 
 linha_ini_nce = 15
@@ -281,8 +268,15 @@ while pagina_doador.cell(row=linha_doadora,column=2).value is not None:
 
   #CONSOLIDAÇÃO
   if opcao_consolidacao.lower() == "s":
-     fazer_consolidacao(arquivo_consolidacao,item_numero,produto,un,qt,unit_nce,unit_paper,unit_grafite,diretor_escola,
-                        nome_escola,dia_consolidacao,mes_consolidacao,ano_consolidacao,cidade_escola,cnpj_escola,total_nce,total_paper,total_grafite,meses)
+    item_para_tabela = {
+        'unidade': un,
+        'q': qt,
+        'produto': produto,
+        'valor_a': formatar_reais(unit_nce),
+        'valor_b': formatar_reais(unit_paper),
+        'valor_c': formatar_reais(unit_grafite)
+    }
+    contexto_consolidacao['itens_tabela'].append(item_para_tabela)
 
   item_numero += 1
   linha_doadora +=1
@@ -296,7 +290,18 @@ if opcao_recibo.lower() == "s":
 
 
 
-print("\nProcesso finalizado!")
+print("\nProcesso finalizado!Gerando documentos Word...")
+if opcao_consolidacao.lower() == "s":
+  print("Gerando consolidação...")
+  contexto_consolidacao['DIRETOR'] = diretor_escola
+  contexto_consolidacao['CIDADE'] = cidade_escola
+  contexto_consolidacao['DATA'] = f"{dia_consolidacao} de {meses[mes_consolidacao]} de {ano_consolidacao}"
+  contexto_consolidacao['TOTAL_A'] = formatar_reais(total_nce)
+  contexto_consolidacao['TOTAL_B'] = formatar_reais(total_paper)
+  contexto_consolidacao['TOTAL_C'] = formatar_reais(total_grafite)
+  contexto_consolidacao['NOME'] = nome_escola
+  contexto_consolidacao['CNPJ'] = cnpj_escola
+  arquivo_consolidacao.render(contexto_consolidacao)
 
 arquivo_nce.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-{mes}-{dia} NCE.xlsx")
 arquivo_paper.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-{mes}-{dia} PAPER&CO.xlsx")
