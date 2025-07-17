@@ -290,7 +290,6 @@ if opcao_recibo.lower() == "s":
   fazer_recibo(arquivo_recibo,total_nce,nome_escola,NF,dia_emitida,mes_emitida,ano_emitida,dia_recibo,mes_recibo,ano_recibo,meio_pagamento,meses)
 
 
-
 print("\nProcesso finalizado!Gerando documentos Word...")
 if opcao_consolidacao.lower() == "s":
   print("Gerando consolidação...")
@@ -304,7 +303,7 @@ if opcao_consolidacao.lower() == "s":
         'NOME': nome_escola,
         'CNPJ': cnpj_escola,
   }
-
+  
   arquivo_consolidacao.render(contexto_simples)
   try:
       tabela_propostas = arquivo_consolidacao.tables[2]
