@@ -54,7 +54,7 @@ Nenhum dado real de preço ou empresa é utilizado.
 
 **Edson Ulisses de Melo Sobrinho**  
 Estudante de Sistemas de Informação na UFS  
-[LinkedIn](https://www.linkedin.com/in/edson-ulisses-103657372/) | [GitHub](https://github.com/edson66)
+[LinkedIn](https://www.linkedin.com/in/edson-sobrinho-103657372/) | [GitHub](https://github.com/edson66)
 
 ---
 
