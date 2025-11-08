@@ -233,10 +233,10 @@ while pagina_doador.cell(row=linha_doadora,column=2).value is not None:
   if unit_nce in precos_randomizados_por_valor:
     unit_paper,unit_grafite = precos_randomizados_por_valor[unit_nce]
   else:
-   unit_paper = round(unit_nce * (1+ random.uniform(0.15,0.25))*20)/20
-   unit_grafite = round(unit_nce * (1+ random.uniform(0.15,0.25))*20)/20
+   unit_paper = round(unit_nce * (1+ random.uniform(0.15,0.40))*20)/20
+   unit_grafite = round(unit_nce * (1+ random.uniform(0.15,0.40))*20)/20
    while abs(unit_paper - unit_grafite)< 0.04:
-     unit_grafite = unit_nce * (1+ random.uniform(0.15,0.25))
+     unit_grafite = unit_nce * (1+ random.uniform(0.15,0.40))
    precos_randomizados_por_valor[unit_nce] = unit_paper,unit_grafite
 
 
