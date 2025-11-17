@@ -305,23 +305,7 @@ if opcao_consolidacao.lower() == "s":
   }
   
   arquivo_consolidacao.render(contexto_simples)
-  try:
-      tabela_propostas = arquivo_consolidacao.tables[2]
-      print("Tabela de propostas encontrada. Adicionando linhas...")
-      for item in contexto_consolidacao['itens_tabela']:
-        celulas_da_nova_linha = tabela_propostas.add_row().cells
-        
-        celulas_da_nova_linha[0].text = str(item['numero'])
-        celulas_da_nova_linha[1].text = item['produto']
-        celulas_da_nova_linha[2].text = item['unidade']
-        celulas_da_nova_linha[3].text = str(item['q'])
-        celulas_da_nova_linha[4].text = item['valor_a']
-        celulas_da_nova_linha[5].text = item['valor_b']
-        celulas_da_nova_linha[6].text = item['valor_c']
-        
-      print("Linhas da tabela adicionadas com sucesso.")
-  except IndexError:
-      print("ERRO: Não foi possível encontrar a tabela de propostas. Verifique se ela é a terceira tabela no documento.")
+
 
 arquivo_nce.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-{mes}-{dia} NCE.xlsx")
 arquivo_paper.save(f"arquivos/ORÇAMENTO NF{NF} {ano}-{mes}-{dia} PAPER&CO.xlsx")
